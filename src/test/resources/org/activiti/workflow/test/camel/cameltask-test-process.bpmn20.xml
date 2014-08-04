@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+             xmlns:activiti="http://activiti.org/bpmn"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             targetNamespace="http://www.activiti.org/workflow/poc"
+             xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL 
+                                     http://www.omg.org/spec/BPMN/20100501/BPMN20.xsd">
+
+    <process id="camelTaskTestProcess" name="Camel Task Test Process">
+    
+        <startEvent id="start" />
+        
+        <sequenceFlow id="flow1" sourceRef="start" targetRef="serviceTask" />
+        
+        <serviceTask id="serviceTask" name="Service Task: Update Camel Body" 
+            activiti:class="org.activiti.workflow.test.camel.UpdateCamelBodyDelegate" />
+        
+        <sequenceFlow id="flow2" sourceRef="serviceTask" targetRef="theCamelTask" />
+        
+        <serviceTask id="theCamelTask" name="Camel Task: Invoke Camel Route" activiti:type="camel">
+            <extensionElements>
+                <activiti:field name="camelContext" stringValue="camelContext" />
+            </extensionElements>
+        </serviceTask>
+        
+        <sequenceFlow id="flow3" sourceRef="theCamelTask" targetRef="end" />
+        
+        <endEvent id="end" />
+    </process>
+</definitions>
