@@ -1,25 +1,18 @@
 package org.activiti.workflow.test.camel;
 
-import org.activiti.engine.test.ActivitiRule;
+import static org.junit.Assert.fail;
+
 import org.activiti.engine.test.Deployment;
+import org.activiti.workflow.test.AbstractWorkflowTest;
+import org.activiti.workflow.test.data.Page;
 import org.apache.camel.CamelExecutionException;
 import org.apache.camel.EndpointInject;
 import org.apache.camel.Produce;
 import org.apache.camel.ProducerTemplate;
 import org.apache.camel.component.mock.MockEndpoint;
-import org.junit.Rule;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.activiti.workflow.test.AbstractWorkflowTest;
-import org.activiti.workflow.test.data.Page;
-
-import static org.junit.Assert.fail;
 
 public class ActivitiCamelTaskTest extends AbstractWorkflowTest{
-
-    @Autowired
-	@Rule
-	public ActivitiRule activitiRule;
 	
     @Produce(uri = "direct:start", context = "camelContext")
     protected ProducerTemplate start;
